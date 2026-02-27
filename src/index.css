@@ -1,0 +1,172 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+
+
+/* Definition of the design system. All colors, gradients, fonts, etc should be defined here. 
+All colors MUST be HSL.
+*/
+
+@layer base {
+  :root {
+    --background: 35 15% 98%;
+    --foreground: 25 35% 15%;
+
+    --card: 40 25% 96%;
+    --card-foreground: 25 35% 15%;
+
+    --popover: 40 25% 96%;
+    --popover-foreground: 25 35% 15%;
+
+    --primary: 25 85% 55%;
+    --primary-foreground: 40 25% 96%;
+
+    --secondary: 45 75% 65%;
+    --secondary-foreground: 25 35% 15%;
+
+    --muted: 40 15% 92%;
+    --muted-foreground: 25 15% 45%;
+
+    --accent: 15 85% 65%;
+    --accent-foreground: 25 35% 15%;
+
+    --destructive: 0 84.2% 60.2%;
+    --destructive-foreground: 40 25% 96%;
+
+    --border: 40 15% 88%;
+    --input: 40 15% 90%;
+    --ring: 25 85% 55%;
+
+    /* Custom design tokens for monastery theme */
+    --saffron: 25 85% 55%;
+    --gold: 45 75% 65%;
+    --mountain-blue: 200 25% 35%;
+    --warm-stone: 35 15% 88%;
+    --deep-earth: 25 35% 25%;
+    
+    /* Gradients */
+    --gradient-sunset: linear-gradient(135deg, hsl(var(--saffron)), hsl(var(--gold)));
+    --gradient-mountain: linear-gradient(180deg, hsl(var(--mountain-blue)), hsl(var(--saffron)));
+    --gradient-hero: linear-gradient(135deg, hsl(var(--saffron) / 0.9), hsl(var(--gold) / 0.8));
+    
+    /* Shadows */
+    --shadow-monastery: 0 20px 40px -10px hsl(var(--saffron) / 0.2);
+    --shadow-card: 0 8px 24px -6px hsl(var(--deep-earth) / 0.1);
+    
+    /* Animations */
+    --transition-monastery: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+
+    --radius: 0.5rem;
+
+    --sidebar-background: 0 0% 98%;
+
+    --sidebar-foreground: 240 5.3% 26.1%;
+
+    --sidebar-primary: 240 5.9% 10%;
+
+    --sidebar-primary-foreground: 0 0% 98%;
+
+    --sidebar-accent: 240 4.8% 95.9%;
+
+    --sidebar-accent-foreground: 240 5.9% 10%;
+
+    --sidebar-border: 220 13% 91%;
+
+    --sidebar-ring: 217.2 91.2% 59.8%;
+  }
+
+  .dark {
+    --background: 25 25% 8%;
+    --foreground: 40 25% 92%;
+
+    --card: 25 20% 12%;
+    --card-foreground: 40 25% 92%;
+
+    --popover: 25 20% 12%;
+    --popover-foreground: 40 25% 92%;
+
+    --primary: 25 85% 65%;
+    --primary-foreground: 25 25% 8%;
+
+    --secondary: 45 55% 45%;
+    --secondary-foreground: 40 25% 92%;
+
+    --muted: 25 15% 20%;
+    --muted-foreground: 40 15% 65%;
+
+    --accent: 15 75% 55%;
+    --accent-foreground: 40 25% 92%;
+
+    --destructive: 0 62.8% 50.6%;
+    --destructive-foreground: 40 25% 92%;
+
+    --border: 25 15% 22%;
+    --input: 25 15% 22%;
+    --ring: 25 85% 65%;
+    
+    /* Dark mode custom tokens */
+    --saffron: 25 85% 65%;
+    --gold: 45 55% 55%;
+    --mountain-blue: 200 35% 25%;
+    --warm-stone: 25 15% 22%;
+    --deep-earth: 25 35% 15%;
+    --sidebar-background: 240 5.9% 10%;
+    --sidebar-foreground: 240 4.8% 95.9%;
+    --sidebar-primary: 224.3 76.3% 48%;
+    --sidebar-primary-foreground: 0 0% 100%;
+    --sidebar-accent: 240 3.7% 15.9%;
+    --sidebar-accent-foreground: 240 4.8% 95.9%;
+    --sidebar-border: 240 3.7% 15.9%;
+    --sidebar-ring: 217.2 91.2% 59.8%;
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+
+  body {
+    @apply bg-background text-foreground;
+    font-family: 'Inter', system-ui, -apple-system, sans-serif;
+  }
+
+  html {
+    scroll-behavior: smooth;
+  }
+}
+
+/* Custom Scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: hsl(35 15% 95%);
+}
+
+::-webkit-scrollbar-thumb {
+  background: linear-gradient(180deg, hsl(25 85% 55%), hsl(45 75% 65%));
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: hsl(25 85% 45%);
+}
+
+/* Selection Color */
+::selection {
+  background-color: hsl(25 85% 55% / 0.3);
+  color: hsl(25 35% 15%);
+}
+
+/* Prose Override for AI content */
+.prose strong {
+  color: hsl(25 35% 25%);
+}
+
+.prose em {
+  color: hsl(25 85% 55%);
+}
+
