@@ -19,20 +19,20 @@ declare global {
 }
 
 // Generate access token
-export const generateAccessToken = (user: { _id: string; username: string; role: string }) => {
+export const generateAccessToken = (user: any) => {
     return jwt.sign(
-        { id: user._id, username: user.username, role: user.role },
+        { id: String(user._id), username: user.username, role: user.role },
         JWT_SECRET,
-        { expiresIn: JWT_EXPIRES_IN }
+        { expiresIn: JWT_EXPIRES_IN as any }
     );
 };
 
 // Generate refresh token
-export const generateRefreshToken = (user: { _id: string }) => {
+export const generateRefreshToken = (user: any) => {
     return jwt.sign(
-        { id: user._id },
+        { id: String(user._id) },
         JWT_SECRET + "_refresh",
-        { expiresIn: JWT_REFRESH_EXPIRES_IN }
+        { expiresIn: JWT_REFRESH_EXPIRES_IN as any }
     );
 };
 
