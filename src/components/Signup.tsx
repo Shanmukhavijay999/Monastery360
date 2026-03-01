@@ -11,7 +11,7 @@ import {
 } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 
-const API = "/api";
+const API = import.meta.env.PROD ? "https://monastery360-0f3x.onrender.com/api" : "/api";
 
 type Step = "form" | "otp" | "success";
 
