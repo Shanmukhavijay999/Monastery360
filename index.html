@@ -1,30 +1,61 @@
 <!doctype html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
-    <title>Monastery360 - Digital Heritage Platform for Sikkim's Sacred Monasteries</title>
-    <meta name="description" content="Explore over 200 ancient monasteries of Sikkim through immersive virtual tours, digital archives, and cultural experiences. Preserve Himalayan Buddhist heritage through technology." />
-    <meta name="author" content="Government of Sikkim - Department of Higher & Technical Education" />
-    <meta name="keywords" content="Sikkim monasteries, virtual tours, Buddhist heritage, cultural preservation, digital archives, Himalayan culture" />
 
-    <meta property="og:title" content="Monastery360 - Discover Sikkim's Sacred Monasteries" />
-    <meta property="og:description" content="Experience over 200 ancient monasteries through 360° virtual tours, explore cultural treasures, and preserve Himalayan heritage." />
-    <meta property="og:type" content="website" />
-    <meta property="og:image" content="https://lovable.dev/opengraph-image-p98pqg.png" />
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
 
-    <meta name="twitter:card" content="summary_large_image" />
-    <meta name="twitter:site" content="@lovable_dev" />
-    <meta name="twitter:image" content="https://lovable.dev/opengraph-image-p98pqg.png" />
-    
-    <link rel="canonical" href="https://monastery360.sikkim.gov.in" />
-  </head>
+  <!-- Preconnect for performance -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap"
+    rel="stylesheet">
 
-  <body>
-    <div id="root"></div>
-    <script type="module" src="/src/main.tsx"></script>
-  </body>
+  <!-- Primary Meta -->
+  <title>Monastery360 — Discover Sikkim's Sacred Heritage</title>
+  <meta name="description"
+    content="Explore 200+ ancient monasteries of Sikkim through immersive virtual tours, digital archives, and AI-powered cultural experiences. Preserving Himalayan Buddhist heritage through technology." />
+  <meta name="author" content="Government of Sikkim — Department of Higher & Technical Education" />
+  <meta name="keywords"
+    content="Sikkim monasteries, virtual tours, Buddhist heritage, cultural preservation, digital archives, Himalayan culture" />
+
+  <!-- Theme Color for address bar -->
+  <meta name="theme-color" content="#0A0A0A" media="(prefers-color-scheme: dark)" />
+  <meta name="theme-color" content="#FAFAF8" media="(prefers-color-scheme: light)" />
+
+  <!-- Apple PWA -->
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+  <meta name="apple-mobile-web-app-title" content="Monastery360" />
+  <link rel="manifest" href="/manifest.json" />
+
+  <!-- Open Graph -->
+  <meta property="og:title" content="Monastery360 — Discover Sikkim's Sacred Heritage" />
+  <meta property="og:description"
+    content="Experience 200+ ancient monasteries through 360° virtual tours, explore cultural treasures, and preserve Himalayan heritage." />
+  <meta property="og:type" content="website" />
+  <meta property="og:image" content="https://lovable.dev/opengraph-image-p98pqg.png" />
+
+  <!-- Twitter -->
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:image" content="https://lovable.dev/opengraph-image-p98pqg.png" />
+
+  <link rel="canonical" href="https://monastery360.sikkim.gov.in" />
+</head>
+
+<body>
+  <div id="root"></div>
+  <script type="module" src="/src/main.tsx"></script>
+  <script>
+    if ('serviceWorker' in navigator) {
+      window.addEventListener('load', () => {
+        navigator.serviceWorker.register('/sw.js')
+          .then(reg => console.log('SW registered:', reg.scope))
+          .catch(err => console.log('SW failed:', err));
+      });
+    }
+  </script>
+</body>
+
 </html>

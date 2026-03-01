@@ -124,116 +124,107 @@ const AIMonasteryQuiz = () => {
     };
 
     return (
-        <section id="quiz" className="py-20 bg-gradient-to-b from-orange-50 via-amber-50 to-yellow-50 relative overflow-hidden">
-            <div className="absolute top-20 left-10 w-64 h-64 bg-purple-200/20 rounded-full blur-3xl" />
-            <div className="absolute bottom-20 right-10 w-80 h-80 bg-amber-200/20 rounded-full blur-3xl" />
+        <section id="quiz" className="section-padding bg-background relative overflow-hidden">
 
             <div className="container mx-auto px-4 relative z-10">
-                <div className="text-center mb-16 animate-fade-in-up">
-                    <div className="inline-flex items-center gap-2 bg-gradient-to-r from-purple-500 to-indigo-500 text-white px-5 py-2 rounded-full text-sm font-semibold mb-6 shadow-lg shadow-purple-200">
-                        <Brain className="w-4 h-4" />
+                <div className="text-center mb-16 md:mb-20">
+                    <div className="inline-flex items-center gap-2 bg-foreground text-background px-4 py-1.5 rounded-full text-xs font-semibold mb-6">
+                        <Brain className="w-3.5 h-3.5" />
                         AI Quiz Challenge
                     </div>
-                    <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold text-deep-earth mb-4">
+                    <h2 className="section-heading text-foreground">
                         Test Your Monastery Knowledge
                     </h2>
-                    <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
+                    <p className="section-subheading">
                         Challenge yourself with AI-generated questions about Sikkim's monasteries,
-                        Buddhist culture, and heritage. Every quiz is unique!
+                        Buddhist culture, and heritage.
                     </p>
                 </div>
 
                 <div className="max-w-2xl mx-auto">
                     {!quizStarted ? (
-                        <Card className="shadow-2xl border-purple-100 animate-fade-in-up">
-                            <CardContent className="p-12 text-center">
-                                <div className="w-24 h-24 bg-gradient-to-br from-purple-500 to-indigo-500 rounded-3xl flex items-center justify-center mx-auto mb-8 shadow-xl shadow-purple-200">
-                                    <Brain className="w-12 h-12 text-white" />
+                        <div className="bg-card rounded-3xl border border-border/60 shadow-premium">
+                            <div className="p-12 text-center">
+                                <div className="w-20 h-20 bg-foreground rounded-2xl flex items-center justify-center mx-auto mb-8">
+                                    <Brain className="w-10 h-10 text-background" />
                                 </div>
-                                <h3 className="text-2xl font-bold text-deep-earth mb-4">
+                                <h3 className="text-2xl font-bold text-foreground mb-4">
                                     Ready to Test Your Knowledge?
                                 </h3>
                                 <p className="text-muted-foreground mb-8">
                                     5 AI-generated questions about Sikkim's monasteries and Buddhist heritage.
-                                    Each quiz is unique and crafted by AI!
                                 </p>
                                 <Button
                                     onClick={startQuiz}
-                                    className="bg-gradient-to-r from-purple-500 to-indigo-500 hover:from-purple-600 hover:to-indigo-600 text-white px-10 py-6 text-lg rounded-2xl shadow-xl shadow-purple-200 transition-all duration-300 hover:scale-105 gap-3"
+                                    className="bg-foreground text-background hover:bg-foreground/90 px-10 py-6 text-base rounded-full transition-all duration-300 hover:scale-105 gap-2 font-semibold"
                                 >
                                     <Zap className="w-5 h-5" />
                                     Start AI Quiz
                                 </Button>
-                            </CardContent>
-                        </Card>
-                    ) : isLoading ? (
-                        <Card className="shadow-2xl border-purple-100 animate-fade-in-up">
-                            <CardContent className="p-12 text-center">
-                                <div className="flex flex-col items-center gap-4">
-                                    <div className="relative">
-                                        <Loader2 className="w-16 h-16 text-purple-500 animate-spin" />
-                                        <Sparkles className="w-6 h-6 text-amber-400 absolute -top-1 -right-1 animate-pulse" />
-                                    </div>
-                                    <p className="text-xl text-gray-500 font-medium">Generating unique quiz...</p>
-                                    <p className="text-sm text-gray-400">AI is crafting questions just for you</p>
-                                </div>
-                            </CardContent>
-                        </Card>
-                    ) : showResult ? (
-                        <Card className="shadow-2xl border-purple-100 animate-fade-in-up overflow-hidden">
-                            <div className="bg-gradient-to-r from-purple-500 via-indigo-500 to-purple-600 p-8 text-white text-center">
-                                <div className="text-6xl mb-4">{getScoreEmoji()}</div>
-                                <h3 className="text-3xl font-bold mb-2">Quiz Complete!</h3>
-                                <p className="text-white/80">{getScoreMessage()}</p>
                             </div>
-                            <CardContent className="p-8 text-center">
+                        </div>
+                    ) : isLoading ? (
+                        <div className="bg-card rounded-3xl border border-border/60 shadow-premium">
+                            <div className="p-12 text-center">
+                                <div className="flex flex-col items-center gap-4">
+                                    <Loader2 className="w-12 h-12 text-primary animate-spin" />
+                                    <p className="text-lg text-muted-foreground font-medium">Generating unique quiz...</p>
+                                    <p className="text-sm text-muted-foreground">AI is crafting questions just for you</p>
+                                </div>
+                            </div>
+                        </div>
+                    ) : showResult ? (
+                        <div className="bg-card rounded-3xl border border-border/60 shadow-premium overflow-hidden">
+                            <div className="bg-foreground p-8 text-background text-center">
+                                <div className="text-5xl mb-4">{getScoreEmoji()}</div>
+                                <h3 className="text-2xl font-bold mb-2">Quiz Complete!</h3>
+                                <p className="text-background/60">{getScoreMessage()}</p>
+                            </div>
+                            <div className="p-8 text-center">
                                 <div className="flex items-center justify-center gap-2 mb-8">
-                                    <Trophy className="w-8 h-8 text-amber-500" />
-                                    <span className="text-4xl font-bold text-deep-earth">
+                                    <Trophy className="w-7 h-7 text-primary" />
+                                    <span className="text-4xl font-bold text-foreground">
                                         {score}/{questions.length}
                                     </span>
                                 </div>
 
-                                {/* Score bar */}
-                                <div className="w-full h-4 bg-gray-200 rounded-full mb-8 overflow-hidden">
+                                <div className="w-full h-2 bg-secondary rounded-full mb-8 overflow-hidden">
                                     <div
-                                        className="h-full bg-gradient-to-r from-purple-500 to-indigo-500 rounded-full transition-all duration-1000 ease-out"
+                                        className="h-full bg-primary rounded-full transition-all duration-1000 ease-out"
                                         style={{ width: `${(score / questions.length) * 100}%` }}
                                     />
                                 </div>
 
-                                <div className="flex gap-4 justify-center">
-                                    <Button
-                                        onClick={startQuiz}
-                                        className="bg-gradient-to-r from-purple-500 to-indigo-500 text-white hover:from-purple-600 hover:to-indigo-600 gap-2 px-8"
-                                    >
-                                        <RotateCcw className="w-4 h-4" />
-                                        New Quiz
-                                    </Button>
-                                </div>
-                            </CardContent>
-                        </Card>
+                                <Button
+                                    onClick={startQuiz}
+                                    className="bg-foreground text-background hover:bg-foreground/90 gap-2 px-8 rounded-full font-medium"
+                                >
+                                    <RotateCcw className="w-4 h-4" />
+                                    New Quiz
+                                </Button>
+                            </div>
+                        </div>
                     ) : (
-                        <Card className="shadow-2xl border-purple-100 animate-fade-in-up overflow-hidden">
+                        <div className="bg-card rounded-3xl border border-border/60 shadow-premium overflow-hidden">
                             {/* Progress bar */}
-                            <div className="h-2 bg-gray-200">
+                            <div className="h-1.5 bg-secondary">
                                 <div
-                                    className="h-full bg-gradient-to-r from-purple-500 to-indigo-500 transition-all duration-500"
+                                    className="h-full bg-primary transition-all duration-500"
                                     style={{ width: `${((currentQ + 1) / questions.length) * 100}%` }}
                                 />
                             </div>
 
-                            <CardContent className="p-8">
+                            <div className="p-8">
                                 <div className="flex items-center justify-between mb-6">
-                                    <span className="text-sm font-semibold text-purple-600 bg-purple-50 px-3 py-1 rounded-full">
+                                    <span className="text-xs font-semibold text-primary bg-primary/10 px-3 py-1 rounded-full">
                                         Question {currentQ + 1}/{questions.length}
                                     </span>
-                                    <span className="text-sm font-semibold text-amber-600 bg-amber-50 px-3 py-1 rounded-full">
+                                    <span className="text-xs font-semibold text-foreground bg-secondary px-3 py-1 rounded-full">
                                         Score: {score}
                                     </span>
                                 </div>
 
-                                <h3 className="text-xl font-bold text-deep-earth mb-8">
+                                <h3 className="text-lg font-bold text-foreground mb-8">
                                     {questions[currentQ]?.question}
                                 </h3>
 
@@ -243,15 +234,15 @@ const AIMonasteryQuiz = () => {
                                             key={index}
                                             onClick={() => handleAnswer(index)}
                                             disabled={answered}
-                                            className={`w-full text-left p-4 rounded-xl border-2 transition-all duration-300 flex items-center gap-3 ${answered
-                                                    ? index === questions[currentQ].correct
-                                                        ? "border-green-400 bg-green-50 text-green-700"
-                                                        : index === selected
-                                                            ? "border-red-400 bg-red-50 text-red-700"
-                                                            : "border-gray-200 text-gray-400"
-                                                    : selected === index
-                                                        ? "border-purple-400 bg-purple-50"
-                                                        : "border-gray-200 hover:border-purple-300 hover:bg-purple-50/50"
+                                            className={`w-full text-left p-4 rounded-xl border transition-all duration-300 flex items-center gap-3 ${answered
+                                                ? index === questions[currentQ].correct
+                                                    ? "border-emerald-400 bg-emerald-500/10 text-emerald-700 dark:text-emerald-400"
+                                                    : index === selected
+                                                        ? "border-red-400 bg-red-500/10 text-red-700 dark:text-red-400"
+                                                        : "border-border text-muted-foreground"
+                                                : selected === index
+                                                    ? "border-primary bg-primary/5"
+                                                    : "border-border hover:border-primary/50 hover:bg-primary/5"
                                                 }`}
                                         >
                                             {answered && index === questions[currentQ].correct && (
@@ -267,11 +258,11 @@ const AIMonasteryQuiz = () => {
 
                                 {/* Explanation */}
                                 {answered && (
-                                    <div className={`p-4 rounded-xl mb-6 animate-fade-in-up ${selected === questions[currentQ].correct
-                                            ? "bg-green-50 border border-green-200"
-                                            : "bg-amber-50 border border-amber-200"
+                                    <div className={`p-4 rounded-xl mb-6 ${selected === questions[currentQ].correct
+                                        ? "bg-emerald-500/10 border border-emerald-500/20"
+                                        : "bg-primary/10 border border-primary/20"
                                         }`}>
-                                        <p className="text-sm text-gray-700">
+                                        <p className="text-sm text-foreground">
                                             <strong>
                                                 {selected === questions[currentQ].correct ? "✅ Correct!" : "❌ Not quite."}
                                             </strong>{" "}
@@ -283,13 +274,13 @@ const AIMonasteryQuiz = () => {
                                 {answered && (
                                     <Button
                                         onClick={nextQuestion}
-                                        className="w-full bg-gradient-to-r from-purple-500 to-indigo-500 text-white hover:from-purple-600 hover:to-indigo-600"
+                                        className="w-full bg-foreground text-background hover:bg-foreground/90 rounded-xl font-medium"
                                     >
                                         {currentQ < questions.length - 1 ? "Next Question →" : "See Results 🏆"}
                                     </Button>
                                 )}
-                            </CardContent>
-                        </Card>
+                            </div>
+                        </div>
                     )}
                 </div>
             </div>

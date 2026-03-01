@@ -78,50 +78,47 @@ const AIMonasteryInsights = () => {
     };
 
     return (
-        <section className="py-20 bg-gradient-to-b from-white via-amber-50/30 to-white relative overflow-hidden">
-            <div className="absolute top-0 right-0 w-96 h-96 bg-orange-100/30 rounded-full blur-3xl" />
-            <div className="absolute bottom-0 left-0 w-72 h-72 bg-amber-100/30 rounded-full blur-3xl" />
-
+        <section className="section-padding bg-secondary/30 relative overflow-hidden">
             <div className="container mx-auto px-4 relative z-10">
-                <div className="text-center mb-16 animate-fade-in-up">
-                    <div className="inline-flex items-center gap-2 bg-gradient-to-r from-emerald-500 to-teal-500 text-white px-5 py-2 rounded-full text-sm font-semibold mb-6 shadow-lg shadow-emerald-200">
-                        <Sparkles className="w-4 h-4" />
+                <div className="text-center mb-16 md:mb-20">
+                    <div className="inline-flex items-center gap-2 bg-foreground text-background px-4 py-1.5 rounded-full text-xs font-semibold mb-6">
+                        <Sparkles className="w-3.5 h-3.5" />
                         AI Insights
                     </div>
-                    <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold text-deep-earth mb-4">
+                    <h2 className="section-heading text-foreground">
                         Discover Monastery Secrets
                     </h2>
-                    <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
+                    <p className="section-subheading">
                         Click on any monastery to unlock AI-generated insights, hidden stories,
                         and fascinating facts curated just for you.
                     </p>
                 </div>
 
                 {/* Monastery Grid */}
-                <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-4 mb-12">
+                <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-3 mb-12">
                     {MONASTERIES.map((monastery) => (
                         <button
                             key={monastery.name}
                             onClick={() => handleGetInsight(monastery.name)}
-                            className={`group relative p-6 rounded-2xl transition-all duration-500 ${selectedMonastery === monastery.name
-                                    ? `bg-gradient-to-br ${monastery.gradient} text-white shadow-xl scale-105`
-                                    : "bg-white border-2 border-gray-200 hover:border-orange-300 hover:shadow-lg"
+                            className={`group relative p-5 rounded-2xl transition-all duration-500 ${selectedMonastery === monastery.name
+                                ? "bg-foreground text-background shadow-premium scale-[1.03]"
+                                : "bg-card border border-border/60 hover:border-border hover:shadow-monastery"
                                 }`}
                         >
-                            <div className="text-4xl mb-3 group-hover:scale-110 transition-transform duration-300">
+                            <div className="text-3xl mb-2.5 group-hover:scale-110 transition-transform duration-300">
                                 {monastery.image}
                             </div>
                             <h4
-                                className={`text-sm font-bold mb-1 ${selectedMonastery === monastery.name ? "text-white" : "text-deep-earth"
+                                className={`text-xs font-semibold mb-1 ${selectedMonastery === monastery.name ? "text-background" : "text-foreground"
                                     }`}
                             >
                                 {monastery.name}
                             </h4>
                             <p
-                                className={`text-xs flex items-center gap-1 ${selectedMonastery === monastery.name ? "text-white/80" : "text-gray-400"
+                                className={`text-[10px] flex items-center gap-1 ${selectedMonastery === monastery.name ? "text-background/60" : "text-muted-foreground"
                                     }`}
                             >
-                                <MapPin className="w-3 h-3" />
+                                <MapPin className="w-2.5 h-2.5" />
                                 {monastery.location}
                             </p>
                         </button>
@@ -130,38 +127,35 @@ const AIMonasteryInsights = () => {
 
                 {/* Insight Display */}
                 {selectedMonastery && (
-                    <Card className="max-w-4xl mx-auto shadow-2xl border-orange-100 animate-fade-in-up overflow-hidden">
-                        <div className="bg-gradient-to-r from-amber-500 via-orange-500 to-red-500 p-6 text-white">
+                    <div className="max-w-4xl mx-auto bg-card rounded-3xl border border-border/60 shadow-premium animate-fade-in-up overflow-hidden">
+                        <div className="bg-foreground p-6 text-background">
                             <div className="flex items-center gap-4">
-                                <div className="w-14 h-14 bg-white/20 rounded-2xl flex items-center justify-center backdrop-blur-sm">
-                                    <BookOpen className="w-7 h-7" />
+                                <div className="w-12 h-12 bg-background/10 rounded-xl flex items-center justify-center">
+                                    <BookOpen className="w-6 h-6" />
                                 </div>
                                 <div>
-                                    <h3 className="text-xl font-bold">{selectedMonastery}</h3>
-                                    <p className="text-white/80 text-sm flex items-center gap-2">
+                                    <h3 className="text-lg font-bold">{selectedMonastery}</h3>
+                                    <p className="text-background/50 text-xs flex items-center gap-1.5">
                                         <Sparkles className="w-3 h-3" />
                                         AI-Generated Insights
                                     </p>
                                 </div>
                             </div>
                         </div>
-                        <CardContent className="p-8">
+                        <div className="p-8">
                             {isLoading ? (
                                 <div className="flex flex-col items-center py-12 gap-4">
-                                    <div className="relative">
-                                        <Loader2 className="w-10 h-10 text-orange-500 animate-spin" />
-                                        <Sparkles className="w-4 h-4 text-amber-400 absolute -top-1 -right-1 animate-pulse" />
-                                    </div>
-                                    <p className="text-gray-500">Uncovering secrets of {selectedMonastery}...</p>
+                                    <Loader2 className="w-8 h-8 text-primary animate-spin" />
+                                    <p className="text-muted-foreground text-sm">Uncovering secrets of {selectedMonastery}...</p>
                                 </div>
                             ) : (
                                 <div
-                                    className="prose prose-orange max-w-none text-gray-700 leading-relaxed"
+                                    className="prose max-w-none text-foreground/80 leading-relaxed"
                                     dangerouslySetInnerHTML={{ __html: formatInsight(insight) }}
                                 />
                             )}
-                        </CardContent>
-                    </Card>
+                        </div>
+                    </div>
                 )}
             </div>
         </section>

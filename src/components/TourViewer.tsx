@@ -1,4 +1,5 @@
-import { useState, useEffect, useCallback } from "react";
+import { useState, useEffect, useCallback, useRef } from "react";
+import { createPortal } from "react-dom";
 import {
     X,
     ChevronLeft,
@@ -284,6 +285,33 @@ const TourViewer = ({ isOpen, onClose, initialScene = 0 }: TourViewerProps) => {
     const totalScenes = tourScenes.length;
     const progress = ((currentScene + 1) / totalScenes) * 100;
 
+    const onCloseRef = useRef(onClose);
+    useEffect(() => {
+        onCloseRef.current = onClose;
+    }, [onClose]);
+
+    // Handle Browser Back Button integration
+    useEffect(() => {
+        if (!isOpen) return;
+
+        window.history.pushState({ tourViewerOpen: true }, "", window.location.href);
+
+        const handlePopState = () => {
+            onCloseRef.current();
+        };
+
+        window.addEventListener("popstate", handlePopState);
+        return () => window.removeEventListener("popstate", handlePopState);
+    }, [isOpen]);
+
+    const handleClose = useCallback(() => {
+        if (window.history.state?.tourViewerOpen) {
+            window.history.back();
+        } else {
+            onClose();
+        }
+    }, [onClose]);
+
     // Reset state when scene changes
     useEffect(() => {
         setActiveHotspot(null);
@@ -297,7 +325,7 @@ const TourViewer = ({ isOpen, onClose, initialScene = 0 }: TourViewerProps) => {
     useEffect(() => {
         if (!isOpen) return;
         const handleKey = (e: KeyboardEvent) => {
-            if (e.key === "Escape") onClose();
+            if (e.key === "Escape") handleClose();
             if (e.key === "ArrowRight") goNext();
             if (e.key === "ArrowLeft") goPrev();
             if (e.key === "i") setShowInfo((p) => !p);
@@ -338,7 +366,7 @@ const TourViewer = ({ isOpen, onClose, initialScene = 0 }: TourViewerProps) => {
 
     if (!isOpen) return null;
 
-    return (
+    const viewerContent = (
         <div className="fixed inset-0 z-[100] bg-black">
             {/* Top Bar */}
             <div className="absolute top-0 left-0 right-0 z-30 bg-gradient-to-b from-black/80 via-black/40 to-transparent">
@@ -353,7 +381,7 @@ const TourViewer = ({ isOpen, onClose, initialScene = 0 }: TourViewerProps) => {
                 <div className="flex items-center justify-between px-4 py-3 md:px-6">
                     <div className="flex items-center gap-3">
                         <button
-                            onClick={onClose}
+                            onClick={handleClose}
                             className="p-2 bg-white/10 hover:bg-white/20 rounded-xl transition-all backdrop-blur-sm text-white"
                         >
                             <X className="w-5 h-5" />
@@ -545,10 +573,10 @@ const TourViewer = ({ isOpen, onClose, initialScene = 0 }: TourViewerProps) => {
                                 }, 400);
                             }}
                             className={`flex-shrink-0 w-16 h-10 md:w-20 md:h-12 rounded-lg overflow-hidden border-2 transition-all duration-300 ${i === currentScene
-                                    ? "border-amber-400 shadow-lg shadow-amber-500/30 scale-110"
-                                    : i < currentScene
-                                        ? "border-white/30 opacity-80"
-                                        : "border-white/10 opacity-50 hover:opacity-80"
+                                ? "border-amber-400 shadow-lg shadow-amber-500/30 scale-110"
+                                : i < currentScene
+                                    ? "border-white/30 opacity-80"
+                                    : "border-white/10 opacity-50 hover:opacity-80"
                                 }`}
                         >
                             <img src={s.image} alt={s.title} className="w-full h-full object-cover" />
@@ -574,7 +602,7 @@ const TourViewer = ({ isOpen, onClose, initialScene = 0 }: TourViewerProps) => {
                     </div>
 
                     <Button
-                        onClick={currentScene === totalScenes - 1 ? onClose : goNext}
+                        onClick={currentScene === totalScenes - 1 ? handleClose : goNext}
                         className="bg-gradient-to-r from-amber-500 to-orange-500 hover:from-amber-600 hover:to-orange-600 text-white rounded-xl gap-2 shadow-lg shadow-orange-500/30"
                     >
                         <span className="hidden sm:inline">
@@ -589,6 +617,8 @@ const TourViewer = ({ isOpen, onClose, initialScene = 0 }: TourViewerProps) => {
             </div>
         </div>
     );
+
+    return createPortal(viewerContent, document.body);
 };
 
 export default TourViewer;

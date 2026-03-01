@@ -1,5 +1,5 @@
 // Gemini AI Integration for Monastery360
-const GEMINI_API_KEY = "AIzaSyCJEGVpG3NjybFcqFsXR7g3IT2ZaOK2ePw";
+const GEMINI_API_KEY = "AIzaSyBF-LUAd2Gtm3qhDLr1sHb1Apc7KEQqw9E";
 
 // Models to try in order — lighter models have higher rate limits
 const MODELS = [

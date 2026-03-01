@@ -1,7 +1,8 @@
 import { Button } from "@/components/ui/button";
-import { Card, CardContent } from "@/components/ui/card";
 import { Search, Download, Eye, BookOpen, Scroll, Palette } from "lucide-react";
 import digitalArchivesImage from "@/assets/digital-archives.jpg";
+import ScrollReveal from "./ScrollReveal";
+import { motion } from "framer-motion";
 
 const DigitalArchives = () => {
   const archives = [
@@ -10,22 +11,22 @@ const DigitalArchives = () => {
       count: "234",
       description: "Rare Buddhist texts and scriptures digitally preserved in high resolution",
       icon: Scroll,
-      items: ["Kangyur Collection", "Tengyur Texts", "Ritual Manuals", "Historical Records"]
+      items: ["Kangyur Collection", "Tengyur Texts", "Ritual Manuals", "Historical Records"],
     },
     {
-      category: "Sacred Murals", 
+      category: "Sacred Murals",
       count: "156",
       description: "High-definition scans of monastery wall paintings and artwork",
       icon: Palette,
-      items: ["Thangka Paintings", "Wall Murals", "Mandala Art", "Deity Portraits"]
+      items: ["Thangka Paintings", "Wall Murals", "Mandala Art", "Deity Portraits"],
     },
     {
       category: "Historical Documents",
       count: "89",
       description: "Important historical papers, letters, and administrative records",
       icon: BookOpen,
-      items: ["Royal Decrees", "Monastery Records", "Trade Documents", "Correspondence"]
-    }
+      items: ["Royal Decrees", "Monastery Records", "Trade Documents", "Correspondence"],
+    },
   ];
 
   const featured = [
@@ -34,183 +35,190 @@ const DigitalArchives = () => {
       language: "Tibetan",
       condition: "Excellent",
       pages: "1,234",
-      description: "Complete Buddhist canon written in gold ink on handmade paper"
+      description: "Complete Buddhist canon written in gold ink on handmade paper",
     },
     {
-      title: "Pemayangtse Thangka Collection", 
+      title: "Pemayangtse Thangka Collection",
       type: "Visual Art",
       condition: "Good",
       items: "45",
-      description: "Intricate silk paintings depicting Buddhist deities and teachings"
+      description: "Intricate silk paintings depicting Buddhist deities and teachings",
     },
     {
       title: "Royal Monastery Charter",
-      date: "1705 AD", 
+      date: "1705 AD",
       condition: "Fair",
       significance: "High",
-      description: "Original founding document establishing monastery rights and lands"
-    }
+      description: "Original founding document establishing monastery rights and lands",
+    },
   ];
 
   return (
-    <section id="archives" className="py-20 bg-warm-stone">
+    <section id="archives" className="section-padding bg-secondary/30">
       <div className="container mx-auto px-4">
-        <div className="text-center mb-16 animate-fade-in-up">
-          <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold text-deep-earth mb-4">
-            Digital Cultural Archives
-          </h2>
-          <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
-            Preserving Sikkim's cultural heritage through advanced digitization. 
-            Access rare manuscripts, sacred art, and historical documents for research and education.
-          </p>
-        </div>
+        <ScrollReveal>
+          <div className="text-center mb-16 md:mb-20">
+            <h2 className="section-heading text-foreground">
+              Digital Cultural Archives
+            </h2>
+            <p className="section-subheading">
+              Preserving Sikkim's cultural heritage through advanced digitization.
+              Access rare manuscripts, sacred art, and historical documents.
+            </p>
+          </div>
+        </ScrollReveal>
 
         {/* Archive Categories */}
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-16">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-5 mb-16">
           {archives.map((archive, index) => {
             const IconComponent = archive.icon;
             return (
-              <Card key={archive.category} className="group hover:shadow-monastery transition-monastery animate-fade-in-up" style={{animationDelay: `${index * 0.1}s`}}>
-                <CardContent className="p-6 text-center">
-                  <div className="w-16 h-16 bg-gradient-hero rounded-full flex items-center justify-center mx-auto mb-4 group-hover:scale-110 transition-monastery">
-                    <IconComponent className="w-8 h-8 text-primary-foreground" />
+              <ScrollReveal key={archive.category} delay={index * 0.1}>
+                <motion.div
+                  whileHover={{ y: -4 }}
+                  transition={{ duration: 0.4, ease: [0.16, 1, 0.3, 1] }}
+                  className="group bg-card rounded-2xl border border-border/60 p-8 text-center hover:shadow-premium hover:border-border transition-all duration-500"
+                >
+                  <div className="w-14 h-14 bg-primary/10 rounded-2xl flex items-center justify-center mx-auto mb-5 group-hover:scale-110 group-hover:bg-primary/15 transition-all duration-500">
+                    <IconComponent className="w-7 h-7 text-primary" />
                   </div>
-                  
-                  <h3 className="text-2xl font-bold text-deep-earth mb-2">{archive.category}</h3>
-                  <div className="text-3xl font-bold text-saffron mb-3">{archive.count}</div>
-                  <p className="text-muted-foreground text-sm mb-4">{archive.description}</p>
-                  
-                  <div className="space-y-1 mb-4">
+
+                  <h3 className="text-xl font-semibold text-foreground mb-2">{archive.category}</h3>
+                  <div className="text-3xl font-bold text-primary mb-3">{archive.count}</div>
+                  <p className="text-muted-foreground text-sm mb-5 leading-relaxed">{archive.description}</p>
+
+                  <div className="flex flex-wrap justify-center gap-1.5 mb-6">
                     {archive.items.map((item) => (
-                      <div key={item} className="text-xs bg-background text-deep-earth px-2 py-1 rounded">
+                      <span key={item} className="text-[11px] bg-secondary text-secondary-foreground px-2.5 py-1 rounded-full font-medium">
                         {item}
-                      </div>
+                      </span>
                     ))}
                   </div>
-                  
-                  <Button variant="monastery" size="sm" className="w-full">
+
+                  <Button className="w-full bg-foreground text-background hover:bg-foreground/90 rounded-xl gap-2 h-10 text-sm font-medium">
                     <Eye className="w-4 h-4" />
                     Browse Collection
                   </Button>
-                </CardContent>
-              </Card>
+                </motion.div>
+              </ScrollReveal>
             );
           })}
         </div>
 
-        {/* Featured Archive */}
-        <div className="mb-16 animate-fade-in-up">
-          <Card className="overflow-hidden shadow-monastery">
+        {/* Featured Archive — Split Layout */}
+        <ScrollReveal className="mb-16">
+          <div className="bg-card rounded-3xl border border-border/60 overflow-hidden hover:shadow-premium transition-all duration-700">
             <div className="grid grid-cols-1 lg:grid-cols-2">
-              <div className="relative">
-                <img 
+              <div className="relative overflow-hidden">
+                <motion.img
+                  whileHover={{ scale: 1.03 }}
+                  transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
                   src={digitalArchivesImage}
                   alt="Ancient Buddhist manuscripts and artwork"
-                  className="w-full h-full object-cover"
+                  className="w-full h-full object-cover min-h-[300px]"
                 />
-                <div className="absolute inset-0 bg-gradient-to-r from-transparent to-deep-earth/20"></div>
+                <div className="absolute inset-0 bg-gradient-to-r from-transparent to-background/20 dark:to-background/40" />
               </div>
-              <CardContent className="p-8">
-                <div className="flex items-center gap-2 mb-4">
-                  <span className="bg-saffron text-primary-foreground px-3 py-1 rounded-full text-sm font-semibold">
+              <div className="p-8 md:p-10 flex flex-col justify-center">
+                <div className="flex items-center gap-2 mb-5">
+                  <span className="bg-primary text-primary-foreground px-3 py-1 rounded-full text-xs font-semibold">
                     Featured Collection
                   </span>
-                  <span className="bg-warm-stone text-deep-earth px-3 py-1 rounded-full text-xs">
+                  <span className="bg-secondary text-secondary-foreground px-3 py-1 rounded-full text-xs font-medium">
                     AI Enhanced
                   </span>
                 </div>
-                
-                <h3 className="text-2xl md:text-3xl font-bold text-deep-earth mb-4">
+
+                <h3 className="text-2xl md:text-3xl font-bold text-foreground mb-4">
                   Sacred Art & Manuscripts Collection
                 </h3>
-                
-                <p className="text-muted-foreground mb-6">
-                  Our most comprehensive digital archive featuring over 500 rare Buddhist manuscripts, 
-                  thangka paintings, and historical documents, all enhanced with AI-powered search 
-                  and translation capabilities.
+
+                <p className="text-muted-foreground mb-6 leading-relaxed">
+                  Over 500 rare Buddhist manuscripts, thangka paintings, and historical documents,
+                  all enhanced with AI-powered search and translation capabilities.
                 </p>
-                
-                <div className="grid grid-cols-2 gap-4 mb-6 text-sm">
-                  <div>
-                    <div className="font-semibold text-deep-earth">Languages</div>
-                    <div className="text-muted-foreground">Tibetan, Sanskrit, Nepali</div>
-                  </div>
-                  <div>
-                    <div className="font-semibold text-deep-earth">Time Period</div>
-                    <div className="text-muted-foreground">15th - 19th Century</div>
-                  </div>
-                  <div>
-                    <div className="font-semibold text-deep-earth">Resolution</div>
-                    <div className="text-muted-foreground">Up to 300 DPI</div>
-                  </div>
-                  <div>
-                    <div className="font-semibold text-deep-earth">Access</div>
-                    <div className="text-muted-foreground">Free for Research</div>
-                  </div>
+
+                <div className="grid grid-cols-2 gap-4 mb-8 text-sm">
+                  {[
+                    { label: "Languages", value: "Tibetan, Sanskrit, Nepali" },
+                    { label: "Time Period", value: "15th – 19th Century" },
+                    { label: "Resolution", value: "Up to 300 DPI" },
+                    { label: "Access", value: "Free for Research" },
+                  ].map(({ label, value }) => (
+                    <div key={label}>
+                      <div className="text-xs text-muted-foreground uppercase tracking-wider mb-1">{label}</div>
+                      <div className="font-medium text-foreground">{value}</div>
+                    </div>
+                  ))}
                 </div>
-                
+
                 <div className="flex flex-col sm:flex-row gap-3">
-                  <Button variant="monastery" className="gap-2">
+                  <Button className="bg-foreground text-background hover:bg-foreground/90 rounded-xl gap-2 font-medium">
                     <Search className="w-4 h-4" />
                     Search Archives
                   </Button>
-                  <Button variant="temple" className="gap-2">
+                  <Button variant="outline" className="rounded-xl gap-2 font-medium border-border hover:bg-secondary">
                     <Download className="w-4 h-4" />
                     Download Catalog
                   </Button>
                 </div>
-              </CardContent>
+              </div>
             </div>
-          </Card>
-        </div>
+          </div>
+        </ScrollReveal>
 
-        {/* Featured Items */}
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+        {/* Featured Items Grid */}
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
           {featured.map((item, index) => (
-            <Card key={item.title} className="hover:shadow-monastery transition-monastery animate-fade-in-up" style={{animationDelay: `${index * 0.1}s`}}>
-              <CardContent className="p-6">
-                <h4 className="font-bold text-deep-earth mb-3">{item.title}</h4>
-                <p className="text-muted-foreground text-sm mb-4">{item.description}</p>
-                
-                <div className="space-y-2 mb-4 text-xs">
+            <ScrollReveal key={item.title} delay={index * 0.1}>
+              <motion.div
+                whileHover={{ y: -4 }}
+                transition={{ duration: 0.4, ease: [0.16, 1, 0.3, 1] }}
+                className="bg-card rounded-2xl border border-border/60 p-6 hover:shadow-premium hover:border-border transition-all duration-500"
+              >
+                <h4 className="font-semibold text-foreground mb-3">{item.title}</h4>
+                <p className="text-muted-foreground text-sm mb-4 leading-relaxed">{item.description}</p>
+
+                <div className="space-y-2 mb-5 text-sm">
                   {item.language && (
                     <div className="flex justify-between">
-                      <span className="text-muted-foreground">Language:</span>
-                      <span className="text-deep-earth">{item.language}</span>
+                      <span className="text-muted-foreground">Language</span>
+                      <span className="text-foreground font-medium">{item.language}</span>
                     </div>
                   )}
                   {item.type && (
                     <div className="flex justify-between">
-                      <span className="text-muted-foreground">Type:</span>
-                      <span className="text-deep-earth">{item.type}</span>
+                      <span className="text-muted-foreground">Type</span>
+                      <span className="text-foreground font-medium">{item.type}</span>
                     </div>
                   )}
                   {item.date && (
                     <div className="flex justify-between">
-                      <span className="text-muted-foreground">Date:</span>
-                      <span className="text-deep-earth">{item.date}</span>
+                      <span className="text-muted-foreground">Date</span>
+                      <span className="text-foreground font-medium">{item.date}</span>
                     </div>
                   )}
                   <div className="flex justify-between">
-                    <span className="text-muted-foreground">Condition:</span>
-                    <span className={`${item.condition === 'Excellent' ? 'text-green-600' : 
-                                     item.condition === 'Good' ? 'text-blue-600' : 'text-amber-600'}`}>
+                    <span className="text-muted-foreground">Condition</span>
+                    <span className={`font-medium ${item.condition === "Excellent" ? "text-emerald-500" :
+                        item.condition === "Good" ? "text-blue-500" : "text-amber-500"
+                      }`}>
                       {item.condition}
                     </span>
                   </div>
                 </div>
-                
+
                 <div className="flex gap-2">
-                  <Button variant="outline" size="sm" className="flex-1">
-                    <Eye className="w-4 h-4" />
+                  <Button variant="outline" size="sm" className="flex-1 rounded-xl gap-1.5 border-border hover:bg-secondary text-sm">
+                    <Eye className="w-3.5 h-3.5" />
                     View
                   </Button>
-                  <Button variant="ghost" size="sm">
-                    <Download className="w-4 h-4" />
+                  <Button variant="ghost" size="sm" className="rounded-xl">
+                    <Download className="w-3.5 h-3.5" />
                   </Button>
                 </div>
-              </CardContent>
-            </Card>
+              </motion.div>
+            </ScrollReveal>
           ))}
         </div>
       </div>

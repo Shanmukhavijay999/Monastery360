@@ -1,0 +1,36 @@
+{
+    "name": "Monastery360",
+    "short_name": "M360",
+    "description": "Discover the sacred monasteries of Sikkim through immersive virtual tours, AI-powered insights, and digital heritage preservation.",
+    "start_url": "/",
+    "display": "standalone",
+    "background_color": "#0a0a0a",
+    "theme_color": "#d97706",
+    "orientation": "portrait-primary",
+    "categories": [
+        "travel",
+        "education",
+        "entertainment"
+    ],
+    "icons": [
+        {
+            "src": "/favicon.svg",
+            "sizes": "any",
+            "type": "image/svg+xml",
+            "purpose": "any maskable"
+        }
+    ],
+    "screenshots": [],
+    "shortcuts": [
+        {
+            "name": "Virtual Tours",
+            "url": "/#virtual-tours",
+            "description": "Explore 360° monastery tours"
+        },
+        {
+            "name": "AI Trip Planner",
+            "url": "/#ai-trip-planner",
+            "description": "Plan your pilgrimage with AI"
+        }
+    ]
+}

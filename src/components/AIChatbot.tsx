@@ -1,4 +1,5 @@
 import { useState, useRef, useEffect, useCallback } from "react";
+import { createPortal } from "react-dom";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import {
@@ -269,7 +270,7 @@ const AIChatbot = () => {
         return date.toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" });
     };
 
-    return (
+    const chatContent = (
         <>
             {/* Floating Chat Button */}
             {!isOpen && (
@@ -281,21 +282,12 @@ const AIChatbot = () => {
                 >
                     <div className="relative">
                         {showPulse && (
-                            <>
-                                <div className="absolute inset-0 bg-gradient-to-r from-amber-500 to-orange-500 rounded-full animate-ping opacity-30" />
-                                <div className="absolute inset-0 bg-gradient-to-r from-amber-500 to-orange-500 rounded-full animate-pulse opacity-20 scale-125" />
-                            </>
+                            <div className="absolute inset-0 bg-primary rounded-full animate-ping opacity-20" />
                         )}
-                        <div className="relative w-16 h-16 bg-gradient-to-br from-amber-500 via-orange-500 to-red-500 rounded-full flex items-center justify-center shadow-2xl shadow-orange-500/30 group-hover:shadow-orange-500/50 transition-all duration-500 group-hover:scale-110">
-                            <Sparkles className="w-7 h-7 text-white animate-pulse" />
+                        <div className="relative w-14 h-14 bg-foreground rounded-full flex items-center justify-center shadow-premium group-hover:scale-110 transition-all duration-500">
+                            <Sparkles className="w-5 h-5 text-background" />
                         </div>
-                        <div className="absolute -top-1 -right-1 w-5 h-5 bg-green-400 rounded-full border-2 border-white animate-pulse" />
-                    </div>
-                    <div className="absolute bottom-full right-0 mb-3 opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none">
-                        <div className="bg-gray-900 text-white text-sm px-4 py-2 rounded-xl shadow-xl whitespace-nowrap">
-                            ✨ Ask Dharma Guide AI
-                            <div className="absolute top-full right-6 w-2 h-2 bg-gray-900 rotate-45 -mt-1" />
-                        </div>
+                        <div className="absolute -top-0.5 -right-0.5 w-3.5 h-3.5 bg-emerald-400 rounded-full border-2 border-background" />
                     </div>
                 </button>
             )}
@@ -304,79 +296,67 @@ const AIChatbot = () => {
             {isOpen && (
                 <div
                     className={`fixed z-50 transition-all duration-500 ease-out ${isExpanded
-                            ? "inset-4 md:inset-8"
-                            : "bottom-6 right-6 w-[400px] h-[600px] max-h-[85vh]"
+                        ? "inset-4 md:inset-8"
+                        : "bottom-6 right-6 w-[400px] h-[600px] max-h-[85vh]"
                         }`}
                 >
-                    <Card className="w-full h-full flex flex-col overflow-hidden shadow-2xl shadow-orange-500/20 border-orange-200/50 backdrop-blur-xl bg-white/95">
+                    <div className="w-full h-full flex flex-col overflow-hidden shadow-2xl rounded-2xl border border-border glass-strong bg-card/95">
                         {/* Header */}
-                        <div className="relative bg-gradient-to-r from-amber-500 via-orange-500 to-red-500 p-4 flex items-center justify-between">
-                            <div className="absolute inset-0 bg-[url('data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjAiIGhlaWdodD0iMjAiIHZpZXdCb3g9IjAgMCAyMCAyMCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48Y2lyY2xlIGN4PSIxMCIgY3k9IjEwIiByPSIxIiBmaWxsPSJyZ2JhKDI1NSwyNTUsMjU1LDAuMDUpIi8+PC9zdmc+')] opacity-50" />
-                            <div className="relative flex items-center gap-3">
-                                <div className="w-10 h-10 bg-white/20 rounded-full flex items-center justify-center backdrop-blur-sm">
-                                    <Bot className="w-6 h-6 text-white" />
+                        <div className="bg-foreground p-4 flex items-center justify-between">
+                            <div className="flex items-center gap-3">
+                                <div className="w-9 h-9 bg-background/10 rounded-full flex items-center justify-center">
+                                    <Bot className="w-5 h-5 text-background" />
                                 </div>
                                 <div>
-                                    <h3 className="text-white font-bold text-sm">Dharma Guide AI</h3>
+                                    <h3 className="text-background font-semibold text-sm">Dharma Guide AI</h3>
                                     <div className="flex items-center gap-1.5">
                                         <div
-                                            className={`w-2 h-2 rounded-full animate-pulse ${isOnline ? "bg-green-300" : "bg-yellow-300"
-                                                }`}
+                                            className={`w-1.5 h-1.5 rounded-full ${isOnline ? "bg-emerald-400" : "bg-amber-400"}`}
                                         />
-                                        <span className="text-white/80 text-xs">
-                                            {isOnline ? "Powered by Gemini" : "Offline Mode — Knowledge Base"}
+                                        <span className="text-background/50 text-[10px]">
+                                            {isOnline ? "Powered by Gemini" : "Offline Mode"}
                                         </span>
                                     </div>
                                 </div>
                             </div>
-                            <div className="relative flex items-center gap-1">
+                            <div className="flex items-center gap-0.5">
                                 <button
                                     onClick={() => setSoundEnabled(!soundEnabled)}
-                                    className="p-2 text-white/80 hover:text-white hover:bg-white/10 rounded-lg transition-colors"
-                                    title={soundEnabled ? "Mute sounds" : "Enable sounds"}
+                                    className="p-2 text-background/50 hover:text-background/80 hover:bg-background/10 rounded-lg transition-colors"
                                 >
-                                    {soundEnabled ? (
-                                        <Volume2 className="w-4 h-4" />
-                                    ) : (
-                                        <VolumeX className="w-4 h-4" />
-                                    )}
+                                    {soundEnabled ? <Volume2 className="w-3.5 h-3.5" /> : <VolumeX className="w-3.5 h-3.5" />}
                                 </button>
                                 <button
                                     onClick={handleClearChat}
-                                    className="p-2 text-white/80 hover:text-white hover:bg-white/10 rounded-lg transition-colors"
-                                    title="Clear chat"
+                                    className="p-2 text-background/50 hover:text-background/80 hover:bg-background/10 rounded-lg transition-colors"
                                 >
-                                    <RotateCcw className="w-4 h-4" />
+                                    <RotateCcw className="w-3.5 h-3.5" />
                                 </button>
                                 <button
                                     onClick={() => setIsExpanded(!isExpanded)}
-                                    className="p-2 text-white/80 hover:text-white hover:bg-white/10 rounded-lg transition-colors"
+                                    className="p-2 text-background/50 hover:text-background/80 hover:bg-background/10 rounded-lg transition-colors"
                                 >
-                                    {isExpanded ? (
-                                        <Minimize2 className="w-4 h-4" />
-                                    ) : (
-                                        <Maximize2 className="w-4 h-4" />
-                                    )}
+                                    {isExpanded ? <Minimize2 className="w-3.5 h-3.5" /> : <Maximize2 className="w-3.5 h-3.5" />}
                                 </button>
                                 <button
                                     onClick={() => setIsOpen(false)}
-                                    className="p-2 text-white/80 hover:text-white hover:bg-white/10 rounded-lg transition-colors"
+                                    className="p-2 text-background/50 hover:text-background/80 hover:bg-background/10 rounded-lg transition-colors"
                                 >
-                                    <X className="w-4 h-4" />
+                                    <X className="w-3.5 h-3.5" />
                                 </button>
                             </div>
                         </div>
 
                         {/* Offline banner */}
                         {!isOnline && (
-                            <div className="bg-amber-50 border-b border-amber-200 px-4 py-2 flex items-center gap-2 text-xs text-amber-700">
-                                <span className="w-2 h-2 bg-amber-400 rounded-full animate-pulse" />
-                                Offline mode — answering from built-in knowledge base
+                            <div className="bg-primary/10 border-b border-primary/20 px-4 py-2 flex items-center gap-2 text-xs text-primary">
+                                <span className="w-1.5 h-1.5 bg-primary rounded-full animate-pulse" />
+                                Offline mode — built-in knowledge base
                                 <button
                                     onClick={() => setIsOnline(true)}
-                                    className="ml-auto text-amber-600 hover:text-amber-800 underline"
+                                    className="ml-auto text-primary/80 hover:text-primary underline"
                                 >
-                                    Retry AI
+                                    Retry
                                 </button>
                             </div>
                         )}
@@ -385,44 +365,44 @@ const AIChatbot = () => {
                         <div
                             ref={chatContainerRef}
                             onScroll={handleScroll}
-                            className="flex-1 overflow-y-auto p-4 space-y-4 bg-gradient-to-b from-orange-50/50 to-amber-50/30 relative"
+                            className="flex-1 overflow-y-auto p-4 space-y-4 bg-background/50 relative"
                         >
                             {messages.map((msg) => (
                                 <div
                                     key={msg.id}
-                                    className={`flex gap-3 ${msg.role === "user" ? "justify-end" : "justify-start"
-                                        } animate-fade-in-up`}
+                                    className={`flex gap-2.5 ${msg.role === "user" ? "justify-end" : "justify-start"
+                                        }`}
                                 >
                                     {msg.role === "assistant" && (
-                                        <div className="w-8 h-8 rounded-full bg-gradient-to-br from-amber-400 to-orange-500 flex items-center justify-center flex-shrink-0 shadow-md">
-                                            <Bot className="w-4 h-4 text-white" />
+                                        <div className="w-7 h-7 rounded-full bg-foreground flex items-center justify-center flex-shrink-0">
+                                            <Bot className="w-3.5 h-3.5 text-background" />
                                         </div>
                                     )}
                                     <div className="flex flex-col gap-1 max-w-[80%]">
                                         <div
                                             className={`px-4 py-3 rounded-2xl text-sm leading-relaxed ${msg.role === "user"
-                                                    ? "bg-gradient-to-r from-amber-500 to-orange-500 text-white rounded-br-md shadow-md shadow-orange-200"
-                                                    : "bg-white text-gray-700 rounded-bl-md shadow-md border border-orange-100"
+                                                ? "bg-foreground text-background rounded-br-md"
+                                                : "bg-card text-foreground rounded-bl-md border border-border/60"
                                                 }`}
                                             dangerouslySetInnerHTML={{
                                                 __html: formatMessage(msg.content),
                                             }}
                                         />
                                         <div
-                                            className={`flex items-center gap-1.5 text-[10px] text-gray-400 ${msg.role === "user" ? "justify-end" : "justify-start"
+                                            className={`flex items-center gap-1.5 text-[10px] text-muted-foreground ${msg.role === "user" ? "justify-end" : "justify-start"
                                                 }`}
                                         >
                                             <span>{formatTime(msg.timestamp)}</span>
                                             {msg.isOffline && (
-                                                <span className="bg-amber-100 text-amber-600 px-1.5 py-0.5 rounded text-[9px]">
+                                                <span className="bg-primary/10 text-primary px-1.5 py-0.5 rounded text-[9px]">
                                                     offline
                                                 </span>
                                             )}
                                         </div>
                                     </div>
                                     {msg.role === "user" && (
-                                        <div className="w-8 h-8 rounded-full bg-gradient-to-br from-gray-600 to-gray-800 flex items-center justify-center flex-shrink-0 shadow-md">
-                                            <User className="w-4 h-4 text-white" />
+                                        <div className="w-7 h-7 rounded-full bg-primary flex items-center justify-center flex-shrink-0">
+                                            <User className="w-3.5 h-3.5 text-primary-foreground" />
                                         </div>
                                     )}
                                 </div>
@@ -430,26 +410,17 @@ const AIChatbot = () => {
 
                             {/* Typing Indicator */}
                             {isLoading && (
-                                <div className="flex gap-3 justify-start animate-fade-in-up">
-                                    <div className="w-8 h-8 rounded-full bg-gradient-to-br from-amber-400 to-orange-500 flex items-center justify-center flex-shrink-0">
-                                        <Bot className="w-4 h-4 text-white" />
+                                <div className="flex gap-2.5 justify-start">
+                                    <div className="w-7 h-7 rounded-full bg-foreground flex items-center justify-center flex-shrink-0">
+                                        <Bot className="w-3.5 h-3.5 text-background" />
                                     </div>
-                                    <div className="bg-white px-5 py-3 rounded-2xl rounded-bl-md shadow-md border border-orange-100">
+                                    <div className="bg-card px-4 py-3 rounded-2xl rounded-bl-md border border-border/60">
                                         <div className="flex gap-1.5 items-center">
-                                            <div
-                                                className="w-2 h-2 bg-orange-400 rounded-full animate-bounce"
-                                                style={{ animationDelay: "0ms" }}
-                                            />
-                                            <div
-                                                className="w-2 h-2 bg-orange-400 rounded-full animate-bounce"
-                                                style={{ animationDelay: "150ms" }}
-                                            />
-                                            <div
-                                                className="w-2 h-2 bg-orange-400 rounded-full animate-bounce"
-                                                style={{ animationDelay: "300ms" }}
-                                            />
-                                            <span className="text-xs text-gray-400 ml-2">
-                                                {isOnline ? "Thinking..." : "Searching knowledge base..."}
+                                            <div className="w-1.5 h-1.5 bg-primary rounded-full animate-bounce" style={{ animationDelay: "0ms" }} />
+                                            <div className="w-1.5 h-1.5 bg-primary rounded-full animate-bounce" style={{ animationDelay: "150ms" }} />
+                                            <div className="w-1.5 h-1.5 bg-primary rounded-full animate-bounce" style={{ animationDelay: "300ms" }} />
+                                            <span className="text-[10px] text-muted-foreground ml-2">
+                                                {isOnline ? "Thinking..." : "Searching..."}
                                             </span>
                                         </div>
                                     </div>
@@ -463,9 +434,9 @@ const AIChatbot = () => {
                             <div className="absolute bottom-32 left-1/2 -translate-x-1/2 z-10">
                                 <button
                                     onClick={scrollToBottom}
-                                    className="bg-white shadow-lg border border-orange-200 rounded-full p-2 hover:bg-orange-50 transition-colors"
+                                    className="bg-card shadow-lg border border-border rounded-full p-2 hover:bg-secondary transition-colors"
                                 >
-                                    <ChevronDown className="w-4 h-4 text-orange-500" />
+                                    <ChevronDown className="w-4 h-4 text-foreground" />
                                 </button>
                             </div>
                         )}
@@ -473,7 +444,7 @@ const AIChatbot = () => {
                         {/* Quick Prompts */}
                         {messages.length <= 1 && (
                             <div className="px-4 pb-2">
-                                <p className="text-xs text-gray-400 mb-2 font-medium">
+                                <p className="text-[10px] text-muted-foreground mb-2 font-medium">
                                     Quick questions:
                                 </p>
                                 <div className="flex flex-wrap gap-1.5">
@@ -481,7 +452,7 @@ const AIChatbot = () => {
                                         <button
                                             key={prompt}
                                             onClick={() => handleSend(prompt)}
-                                            className="text-xs px-3 py-1.5 bg-gradient-to-r from-orange-50 to-amber-50 text-orange-700 rounded-full border border-orange-200 hover:from-orange-100 hover:to-amber-100 hover:border-orange-300 transition-all duration-200 hover:shadow-sm"
+                                            className="text-[10px] px-2.5 py-1.5 bg-secondary text-secondary-foreground rounded-full border border-border/60 hover:border-border hover:bg-secondary/80 transition-all duration-200"
                                         >
                                             {prompt}
                                         </button>
@@ -491,7 +462,7 @@ const AIChatbot = () => {
                         )}
 
                         {/* Input Area */}
-                        <div className="p-3 border-t border-orange-100 bg-white/80 backdrop-blur-sm">
+                        <div className="p-3 border-t border-border bg-card">
                             <div className="flex gap-2">
                                 <input
                                     ref={inputRef}
@@ -500,14 +471,14 @@ const AIChatbot = () => {
                                     onChange={(e) => setInput(e.target.value)}
                                     onKeyDown={(e) => e.key === "Enter" && handleSend()}
                                     placeholder="Ask about monasteries, culture, travel..."
-                                    className="flex-1 px-4 py-2.5 bg-gray-50 border border-orange-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-orange-400 focus:border-transparent placeholder:text-gray-400 transition-all"
+                                    className="flex-1 px-4 py-2.5 bg-secondary border border-border rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-primary/30 focus:border-primary/50 placeholder:text-muted-foreground transition-all text-foreground"
                                     disabled={isLoading}
                                     id="chatbot-input"
                                 />
                                 <Button
                                     onClick={() => handleSend()}
                                     disabled={!input.trim() || isLoading}
-                                    className="bg-gradient-to-r from-amber-500 to-orange-500 hover:from-amber-600 hover:to-orange-600 text-white rounded-xl px-4 shadow-md shadow-orange-200 disabled:opacity-50 disabled:shadow-none transition-all"
+                                    className="bg-foreground text-background hover:bg-foreground/90 rounded-xl px-4 disabled:opacity-50 transition-all"
                                     id="chatbot-send"
                                 >
                                     {isLoading ? (
@@ -517,17 +488,19 @@ const AIChatbot = () => {
                                     )}
                                 </Button>
                             </div>
-                            <p className="text-[10px] text-gray-400 text-center mt-1.5">
+                            <p className="text-[9px] text-muted-foreground text-center mt-1.5">
                                 {isOnline
-                                    ? "Powered by Google Gemini AI • Monastery360"
-                                    : "📚 Using built-in knowledge • Monastery360"}
+                                    ? "Powered by Gemini AI • Monastery360"
+                                    : "Offline mode • Monastery360"}
                             </p>
                         </div>
-                    </Card>
+                    </div>
                 </div>
             )}
         </>
     );
+
+    return createPortal(chatContent, document.body);
 };
 
 export default AIChatbot;

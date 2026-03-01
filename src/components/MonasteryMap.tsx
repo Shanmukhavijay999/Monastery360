@@ -1,11 +1,14 @@
+import { useState } from "react";
 import { Button } from "@/components/ui/button";
-import { Card, CardContent } from "@/components/ui/card";
-import { MapPin, Route, Clock, Camera } from "lucide-react";
+import { MapPin, Route, Clock, Camera, X, Maximize2 } from "lucide-react";
+import ScrollReveal from "./ScrollReveal";
+import { motion, AnimatePresence } from "framer-motion";
 
-// Google API Key
 const GOOGLE_API_KEY = "AIzaSyDnDGJa5sUA8LsaY0ShcgZzK0RTSkH8rB0";
 
 const MonasteryMap = () => {
+  const [activeMonastery, setActiveMonastery] = useState<number | null>(null);
+
   const monasteries = [
     {
       name: "Rumtek Monastery",
@@ -15,7 +18,7 @@ const MonasteryMap = () => {
       established: "1740",
       highlights: ["Golden Stupa", "Ancient Murals", "Prayer Wheels"],
       lat: 27.3305,
-      lng: 88.5825, // Verified Street View coordinate
+      lng: 88.5825,
     },
     {
       name: "Pemayangtse Monastery",
@@ -25,7 +28,7 @@ const MonasteryMap = () => {
       established: "1705",
       highlights: ["Wooden Sculptures", "Sacred Relics", "Mountain Views"],
       lat: 27.3071,
-      lng: 88.2439, // Verified Street View coordinate
+      lng: 88.2439,
     },
     {
       name: "Tashiding Monastery",
@@ -35,7 +38,7 @@ const MonasteryMap = () => {
       established: "1717",
       highlights: ["Holy Spring", "Festival Grounds", "Ancient Chortens"],
       lat: 27.3120,
-      lng: 88.2650, // Verified Street View coordinate
+      lng: 88.2650,
     },
     {
       name: "Enchey Monastery",
@@ -45,131 +48,130 @@ const MonasteryMap = () => {
       established: "1909",
       highlights: ["Urban Location", "Cultural Events", "Easy Access"],
       lat: 27.3375,
-      lng: 88.6060, // Verified Street View coordinate
+      lng: 88.6060,
     },
   ];
 
-  const demoMonastery = monasteries[0]; // Rumtek Monastery for iframe demo
-
   return (
     <div>
-      {/* ======================= Monastery Info Section ======================= */}
-      <section id="map" className="py-20 bg-warm-stone">
+      {/* Monastery Cards Section */}
+      <section id="map" className="section-padding bg-background">
         <div className="container mx-auto px-4">
-          <div className="text-center mb-16">
-            <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold text-deep-earth mb-4">
-              Explore Sikkim Monasteries
-            </h2>
-            <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
-              Discover historic monasteries of Sikkim with details, highlights, and 360° virtual tours.
-            </p>
-          </div>
+          <ScrollReveal>
+            <div className="text-center mb-16 md:mb-20">
+              <h2 className="section-heading text-foreground">
+                Explore Sikkim's Sacred Spaces
+              </h2>
+              <p className="section-subheading">
+                Discover historic monasteries with details, highlights, and immersive 360° virtual tours.
+              </p>
+            </div>
+          </ScrollReveal>
 
-          {/* Monastery Cards */}
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+          {/* Cards Grid */}
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-5">
             {monasteries.map((monastery, index) => (
-              <Card
-                key={monastery.name}
-                className="hover:shadow-monastery transition-monastery animate-fade-in-up group"
-                style={{ animationDelay: `${index * 0.1}s` }}
-              >
-                <CardContent className="p-6">
-                  <div className="flex items-start justify-between mb-4">
-                    <h3 className="font-bold text-deep-earth group-hover:text-saffron transition-monastery">
-                      {monastery.name}
-                    </h3>
-                    <span className="text-xs bg-saffron text-primary-foreground px-2 py-1 rounded">
-                      {monastery.type}
-                    </span>
+              <ScrollReveal key={monastery.name} delay={index * 0.08}>
+                <motion.div
+                  whileHover={{ y: -6, scale: 1.01 }}
+                  transition={{ duration: 0.4, ease: [0.16, 1, 0.3, 1] }}
+                  className="group bg-card rounded-2xl border border-border/60 overflow-hidden hover:shadow-premium hover:border-border transition-all duration-500 cursor-pointer"
+                  onClick={() => setActiveMonastery(activeMonastery === index ? null : index)}
+                >
+                  <div className="p-6">
+                    <div className="flex items-start justify-between mb-4">
+                      <h3 className="font-semibold text-foreground group-hover:text-primary transition-colors duration-300">
+                        {monastery.name}
+                      </h3>
+                      <span className="text-[10px] uppercase tracking-wider bg-primary/10 text-primary px-2.5 py-1 rounded-full font-semibold">
+                        {monastery.type}
+                      </span>
+                    </div>
+
+                    <div className="space-y-2.5 mb-5">
+                      <div className="flex items-center gap-2.5 text-sm text-muted-foreground">
+                        <MapPin className="w-3.5 h-3.5 flex-shrink-0" /> {monastery.location}
+                      </div>
+                      <div className="flex items-center gap-2.5 text-sm text-muted-foreground">
+                        <Route className="w-3.5 h-3.5 flex-shrink-0" /> {monastery.distance}
+                      </div>
+                      <div className="flex items-center gap-2.5 text-sm text-muted-foreground">
+                        <Clock className="w-3.5 h-3.5 flex-shrink-0" /> Est. {monastery.established}
+                      </div>
+                    </div>
+
+                    <div className="mb-5">
+                      <div className="flex flex-wrap gap-1.5">
+                        {monastery.highlights.map((h) => (
+                          <span
+                            key={h}
+                            className="text-[11px] bg-secondary text-secondary-foreground px-2.5 py-1 rounded-full font-medium"
+                          >
+                            {h}
+                          </span>
+                        ))}
+                      </div>
+                    </div>
+
+                    <Button
+                      className="w-full bg-foreground text-background hover:bg-foreground/90 rounded-xl gap-2 h-10 text-sm font-medium transition-all duration-300"
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        setActiveMonastery(activeMonastery === index ? null : index);
+                      }}
+                    >
+                      <Camera className="w-4 h-4" />
+                      View 360°
+                    </Button>
                   </div>
-                  <div className="space-y-3 mb-4">
-                    <div className="flex items-center gap-2 text-sm text-muted-foreground">
-                      <MapPin className="w-4 h-4" /> {monastery.location}
-                    </div>
-                    <div className="flex items-center gap-2 text-sm text-muted-foreground">
-                      <Route className="w-4 h-4" /> {monastery.distance}
-                    </div>
-                    <div className="flex items-center gap-2 text-sm text-muted-foreground">
-                      <Clock className="w-4 h-4" /> Est. {monastery.established}
-                    </div>
-                  </div>
-                  <div className="mb-4">
-                    <h4 className="text-xs font-semibold text-deep-earth mb-2">Highlights:</h4>
-                    <div className="flex flex-wrap gap-1">
-                      {monastery.highlights.map((h) => (
-                        <span
-                          key={h}
-                          className="text-xs bg-warm-stone text-deep-earth px-2 py-1 rounded"
-                        >
-                          {h}
-                        </span>
-                      ))}
-                    </div>
-                  </div>
-                  <Button
-                    variant="monastery"
-                    size="sm"
-                    className="mt-2 w-full"
-                    onClick={() =>
-                      window.open(
-                        `https://www.google.com/maps/@?api=1&map_action=pano&viewpoint=${monastery.lat},${monastery.lng}`,
-                        "_blank"
-                      )
-                    }
-                  >
-                    <Camera className="w-4 h-4" /> View 360°
-                  </Button>
-                </CardContent>
-              </Card>
+                </motion.div>
+              </ScrollReveal>
             ))}
           </div>
         </div>
       </section>
 
-      {/* ======================= Immersive 360° Virtual Tour ======================= */}
-      <section id="tours" className="py-20 bg-background">
-        <div className="container mx-auto px-4">
-          <div className="text-center mb-16">
-            <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold text-deep-earth mb-4">
-              360° Virtual Tour
-            </h2>
-            <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
-              Explore {demoMonastery.name} in full immersive Street View below.
-            </p>
-          </div>
+      {/* Immersive 360° Viewer — Inline, no new tab */}
+      <AnimatePresence>
+        {activeMonastery !== null && (
+          <motion.section
+            initial={{ opacity: 0, height: 0 }}
+            animate={{ opacity: 1, height: "auto" }}
+            exit={{ opacity: 0, height: 0 }}
+            transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
+            className="bg-card border-y border-border overflow-hidden"
+          >
+            <div className="container mx-auto px-4 py-12">
+              <div className="flex items-center justify-between mb-6">
+                <div>
+                  <h3 className="text-2xl font-bold text-foreground">{monasteries[activeMonastery].name}</h3>
+                  <p className="text-sm text-muted-foreground mt-1">
+                    {monasteries[activeMonastery].location} • Est. {monasteries[activeMonastery].established}
+                  </p>
+                </div>
+                <button
+                  onClick={() => setActiveMonastery(null)}
+                  className="p-2.5 rounded-full hover:bg-secondary transition-colors"
+                >
+                  <X className="w-5 h-5 text-muted-foreground" />
+                </button>
+              </div>
 
-          <div className="rounded-xl overflow-hidden shadow-monastery max-w-4xl mx-auto">
-            <iframe
-              width="100%"
-              height="500"
-              loading="lazy"
-              allowFullScreen
-              src={`https://www.google.com/maps/embed/v1/streetview?key=${GOOGLE_API_KEY}&location=${demoMonastery.lat},${demoMonastery.lng}&heading=210&pitch=10&fov=80`}
-              title={`${demoMonastery.name} Street View`}
-            ></iframe>
-
-            <div className="p-6 bg-warm-stone text-center">
-              <h3 className="font-bold text-deep-earth text-xl">{demoMonastery.name}</h3>
-              <p className="text-sm text-muted-foreground">
-                {demoMonastery.location} | Est. {demoMonastery.established}
-              </p>
-              <Button
-                variant="monastery"
-                size="sm"
-                className="mt-4"
-                onClick={() =>
-                  window.open(
-                    `https://www.google.com/maps/@?api=1&map_action=pano&viewpoint=${demoMonastery.lat},${demoMonastery.lng}`,
-                    "_blank"
-                  )
-                }
-              >
-                <Camera className="w-4 h-4" /> Open 360° View
-              </Button>
+              <div className="rounded-2xl overflow-hidden border border-border">
+                <iframe
+                  width="100%"
+                  height="500"
+                  loading="lazy"
+                  allowFullScreen
+                  src={`https://maps.google.com/maps?q=${encodeURIComponent(monasteries[activeMonastery].name + ', ' + monasteries[activeMonastery].location)}&t=k&z=18&ie=UTF8&iwloc=&output=embed`}
+                  title={`${monasteries[activeMonastery].name} Map View`}
+                  className="w-full border-0"
+                />
+              </div>
             </div>
-          </div>
-        </div>
-      </section>
+          </motion.section>
+        )}
+      </AnimatePresence>
     </div>
   );
 };

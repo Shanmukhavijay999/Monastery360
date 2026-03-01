@@ -70,114 +70,105 @@ const AITripPlanner = () => {
     };
 
     return (
-        <section className="py-20 bg-gradient-to-b from-amber-50 via-orange-50 to-yellow-50 relative overflow-hidden">
-            {/* Background decorations */}
-            <div className="absolute top-0 left-0 w-72 h-72 bg-amber-200/20 rounded-full blur-3xl" />
-            <div className="absolute bottom-0 right-0 w-96 h-96 bg-orange-200/20 rounded-full blur-3xl" />
+        <section className="section-padding bg-secondary/30 relative overflow-hidden">
 
             <div className="container mx-auto px-4 relative z-10">
-                <div className="text-center mb-16 animate-fade-in-up">
-                    <div className="inline-flex items-center gap-2 bg-gradient-to-r from-amber-500 to-orange-500 text-white px-5 py-2 rounded-full text-sm font-semibold mb-6 shadow-lg shadow-orange-200">
-                        <Sparkles className="w-4 h-4" />
+                <div className="text-center mb-16 md:mb-20">
+                    <div className="inline-flex items-center gap-2 bg-foreground text-background px-4 py-1.5 rounded-full text-xs font-semibold mb-6">
+                        <Sparkles className="w-3.5 h-3.5" />
                         AI-Powered
                     </div>
-                    <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold text-deep-earth mb-4">
+                    <h2 className="section-heading text-foreground">
                         Plan Your Monastery Pilgrimage
                     </h2>
-                    <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
+                    <p className="section-subheading">
                         Let our AI create a personalized pilgrimage itinerary based on your interests,
-                        pace, and available time. Experience Sikkim's monasteries like never before.
+                        pace, and available time.
                     </p>
                 </div>
 
                 {!showPlan ? (
-                    <div className="max-w-4xl mx-auto space-y-10 animate-fade-in-up">
+                    <div className="max-w-4xl mx-auto space-y-8">
                         {/* Days Selector */}
-                        <Card className="shadow-lg border-orange-100 overflow-hidden">
-                            <CardContent className="p-8">
-                                <h3 className="text-xl font-bold text-deep-earth mb-6 flex items-center gap-2">
-                                    <Calendar className="w-5 h-5 text-saffron" />
-                                    How many days?
-                                </h3>
-                                <div className="flex items-center gap-4 justify-center">
-                                    {[1, 2, 3, 5, 7].map((d) => (
-                                        <button
-                                            key={d}
-                                            onClick={() => setDays(d)}
-                                            className={`w-16 h-16 rounded-2xl text-xl font-bold transition-all duration-300 ${days === d
-                                                    ? "bg-gradient-to-br from-amber-500 to-orange-500 text-white shadow-lg shadow-orange-200 scale-110"
-                                                    : "bg-white text-gray-600 border-2 border-gray-200 hover:border-orange-300 hover:text-orange-600"
-                                                }`}
-                                        >
-                                            {d}
-                                        </button>
-                                    ))}
-                                </div>
-                                <p className="text-center text-sm text-muted-foreground mt-3">
-                                    {days} {days === 1 ? "Day" : "Days"} Trip
-                                </p>
-                            </CardContent>
-                        </Card>
+                        <div className="bg-card rounded-3xl border border-border/60 overflow-hidden p-8">
+                            <h3 className="text-xl font-semibold text-foreground mb-6 flex items-center gap-2">
+                                <Calendar className="w-5 h-5 text-primary" />
+                                How many days?
+                            </h3>
+                            <div className="flex items-center gap-4 justify-center">
+                                {[1, 2, 3, 5, 7].map((d) => (
+                                    <button
+                                        key={d}
+                                        onClick={() => setDays(d)}
+                                        className={`w-14 h-14 rounded-xl text-lg font-bold transition-all duration-300 ${days === d
+                                            ? "bg-foreground text-background shadow-lg scale-110"
+                                            : "bg-secondary text-foreground hover:bg-secondary/80"
+                                            }`}
+                                    >
+                                        {d}
+                                    </button>
+                                ))}
+                            </div>
+                            <p className="text-center text-sm text-muted-foreground mt-3">
+                                {days} {days === 1 ? "Day" : "Days"} Trip
+                            </p>
+                        </div>
 
                         {/* Interests Selection */}
-                        <Card className="shadow-lg border-orange-100">
-                            <CardContent className="p-8">
-                                <h3 className="text-xl font-bold text-deep-earth mb-6 flex items-center gap-2">
-                                    <Heart className="w-5 h-5 text-saffron" />
-                                    What interests you? <span className="text-sm font-normal text-gray-400">(Select at least one)</span>
-                                </h3>
-                                <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
-                                    {INTERESTS.map(({ icon: Icon, label, value }) => (
-                                        <button
-                                            key={value}
-                                            onClick={() => toggleInterest(value)}
-                                            className={`flex items-center gap-3 p-4 rounded-xl transition-all duration-300 text-left ${interests.includes(value)
-                                                    ? "bg-gradient-to-r from-amber-500 to-orange-500 text-white shadow-lg shadow-orange-200"
-                                                    : "bg-white border-2 border-gray-200 text-gray-600 hover:border-orange-300"
-                                                }`}
-                                        >
-                                            <Icon className="w-5 h-5 flex-shrink-0" />
-                                            <span className="text-sm font-medium">{label}</span>
-                                        </button>
-                                    ))}
-                                </div>
-                            </CardContent>
-                        </Card>
+                        <div className="bg-card rounded-3xl border border-border/60 p-8">
+                            <h3 className="text-xl font-semibold text-foreground mb-6 flex items-center gap-2">
+                                <Heart className="w-5 h-5 text-primary" />
+                                What interests you? <span className="text-sm font-normal text-muted-foreground">(Select at least one)</span>
+                            </h3>
+                            <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
+                                {INTERESTS.map(({ icon: Icon, label, value }) => (
+                                    <button
+                                        key={value}
+                                        onClick={() => toggleInterest(value)}
+                                        className={`flex items-center gap-3 p-4 rounded-xl transition-all duration-300 text-left ${interests.includes(value)
+                                            ? "bg-foreground text-background shadow-lg"
+                                            : "bg-card border border-border/60 text-foreground hover:border-border"
+                                            }`}
+                                    >
+                                        <Icon className="w-5 h-5 flex-shrink-0" />
+                                        <span className="text-sm font-medium">{label}</span>
+                                    </button>
+                                ))}
+                            </div>
+                        </div>
 
                         {/* Pace Selection */}
-                        <Card className="shadow-lg border-orange-100">
-                            <CardContent className="p-8">
-                                <h3 className="text-xl font-bold text-deep-earth mb-6 flex items-center gap-2">
-                                    <Footprints className="w-5 h-5 text-saffron" />
-                                    Your preferred pace
-                                </h3>
-                                <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-                                    {PACE_OPTIONS.map(({ icon: Icon, label, value, desc }) => (
-                                        <button
-                                            key={value}
-                                            onClick={() => setPace(value)}
-                                            className={`flex flex-col items-center gap-3 p-6 rounded-xl transition-all duration-300 ${pace === value
-                                                    ? "bg-gradient-to-br from-amber-500 to-orange-500 text-white shadow-lg shadow-orange-200"
-                                                    : "bg-white border-2 border-gray-200 text-gray-600 hover:border-orange-300"
-                                                }`}
-                                        >
-                                            <Icon className="w-8 h-8" />
-                                            <span className="font-bold">{label}</span>
-                                            <span className={`text-xs ${pace === value ? "text-white/80" : "text-gray-400"}`}>
-                                                {desc}
-                                            </span>
-                                        </button>
-                                    ))}
-                                </div>
-                            </CardContent>
-                        </Card>
+                        <div className="bg-card rounded-3xl border border-border/60 p-8">
+                            <h3 className="text-xl font-semibold text-foreground mb-6 flex items-center gap-2">
+                                <Footprints className="w-5 h-5 text-primary" />
+                                Your preferred pace
+                            </h3>
+                            <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+                                {PACE_OPTIONS.map(({ icon: Icon, label, value, desc }) => (
+                                    <button
+                                        key={value}
+                                        onClick={() => setPace(value)}
+                                        className={`flex flex-col items-center gap-3 p-5 rounded-xl transition-all duration-300 ${pace === value
+                                            ? "bg-foreground text-background shadow-lg"
+                                            : "bg-card border border-border/60 text-foreground hover:border-border"
+                                            }`}
+                                    >
+                                        <Icon className="w-7 h-7" />
+                                        <span className="font-semibold text-sm">{label}</span>
+                                        <span className={`text-xs ${pace === value ? "text-background/60" : "text-muted-foreground"}`}>
+                                            {desc}
+                                        </span>
+                                    </button>
+                                ))}
+                            </div>
+                        </div>
 
                         {/* Generate Button */}
                         <div className="text-center">
                             <Button
                                 onClick={handleGenerate}
                                 disabled={interests.length === 0}
-                                className="bg-gradient-to-r from-amber-500 via-orange-500 to-red-500 hover:from-amber-600 hover:via-orange-600 hover:to-red-600 text-white px-12 py-6 text-lg rounded-2xl shadow-xl shadow-orange-300/30 disabled:opacity-50 transition-all duration-300 hover:scale-105 gap-3"
+                                className="bg-foreground text-background hover:bg-foreground/90 px-10 py-6 text-base rounded-full disabled:opacity-50 transition-all duration-300 hover:scale-105 gap-2 font-semibold"
                             >
                                 <Sparkles className="w-5 h-5" />
                                 Generate My Pilgrimage Plan
@@ -185,24 +176,23 @@ const AITripPlanner = () => {
                         </div>
                     </div>
                 ) : (
-                    <div className="max-w-4xl mx-auto animate-fade-in-up">
-                        <Card className="shadow-2xl border-orange-100 overflow-hidden">
+                    <div className="max-w-4xl mx-auto">
+                        <div className="bg-card rounded-3xl border border-border/60 shadow-premium overflow-hidden">
                             {/* Plan Header */}
-                            <div className="bg-gradient-to-r from-amber-500 via-orange-500 to-red-500 p-8 text-white relative">
-                                <div className="absolute inset-0 bg-[url('data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjAiIGhlaWdodD0iMjAiIHZpZXdCb3g9IjAgMCAyMCAyMCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48Y2lyY2xlIGN4PSIxMCIgY3k9IjEwIiByPSIxIiBmaWxsPSJyZ2JhKDI1NSwyNTUsMjU1LDAuMDUpIi8+PC9zdmc+')] opacity-50" />
-                                <div className="relative">
+                            <div className="bg-foreground p-8 text-background">
+                                <div>
                                     <div className="flex items-center gap-3 mb-3">
-                                        <Map className="w-8 h-8" />
-                                        <h3 className="text-2xl font-bold">Your Personalized Pilgrimage</h3>
+                                        <Map className="w-7 h-7" />
+                                        <h3 className="text-xl font-bold">Your Personalized Pilgrimage</h3>
                                     </div>
-                                    <p className="text-white/80">
+                                    <p className="text-background/50 text-sm">
                                         {days}-Day {pace} journey • {interests.length} interests selected
                                     </p>
                                 </div>
                             </div>
 
                             {/* Plan Content */}
-                            <CardContent className="p-8">
+                            <div className="p-8">
                                 {isLoading ? (
                                     <div className="flex flex-col items-center justify-center py-20 gap-4">
                                         <div className="relative">
@@ -219,27 +209,27 @@ const AITripPlanner = () => {
                                     />
                                 )}
 
-                                <div className="mt-8 flex gap-4 justify-center">
+                                <div className="mt-8 flex gap-3 justify-center">
                                     <Button
                                         onClick={() => {
                                             setShowPlan(false);
                                             setPlan("");
                                         }}
                                         variant="outline"
-                                        className="border-orange-300 text-orange-600 hover:bg-orange-50"
+                                        className="border-border rounded-xl hover:bg-secondary"
                                     >
                                         ← Modify Plan
                                     </Button>
                                     <Button
                                         onClick={handleGenerate}
-                                        className="bg-gradient-to-r from-amber-500 to-orange-500 text-white hover:from-amber-600 hover:to-orange-600 gap-2"
+                                        className="bg-foreground text-background hover:bg-foreground/90 gap-2 rounded-xl font-medium"
                                     >
                                         <Sparkles className="w-4 h-4" />
                                         Regenerate
                                     </Button>
                                 </div>
-                            </CardContent>
-                        </Card>
+                            </div>
+                        </div>
                     </div>
                 )}
             </div>

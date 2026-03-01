@@ -2,115 +2,121 @@
 @tailwind components;
 @tailwind utilities;
 
-
-
-/* Definition of the design system. All colors, gradients, fonts, etc should be defined here. 
-All colors MUST be HSL.
-*/
+/* ============================================================
+   MONASTERY360 — PREMIUM DESIGN SYSTEM
+   Apple.com-inspired, spiritual-tech aesthetic
+   ============================================================ */
 
 @layer base {
   :root {
-    --background: 35 15% 98%;
-    --foreground: 25 35% 15%;
+    /* Premium Light Mode */
+    --background: 40 20% 98%;
+    --foreground: 220 15% 10%;
 
-    --card: 40 25% 96%;
-    --card-foreground: 25 35% 15%;
+    --card: 0 0% 100%;
+    --card-foreground: 220 15% 10%;
 
-    --popover: 40 25% 96%;
-    --popover-foreground: 25 35% 15%;
+    --popover: 0 0% 100%;
+    --popover-foreground: 220 15% 10%;
 
-    --primary: 25 85% 55%;
-    --primary-foreground: 40 25% 96%;
+    --primary: 30 90% 50%;
+    --primary-foreground: 0 0% 100%;
 
-    --secondary: 45 75% 65%;
-    --secondary-foreground: 25 35% 15%;
+    --secondary: 35 30% 94%;
+    --secondary-foreground: 220 15% 10%;
 
-    --muted: 40 15% 92%;
-    --muted-foreground: 25 15% 45%;
+    --muted: 40 20% 95%;
+    --muted-foreground: 220 10% 45%;
 
-    --accent: 15 85% 65%;
-    --accent-foreground: 25 35% 15%;
+    --accent: 30 90% 50%;
+    --accent-foreground: 0 0% 100%;
 
-    --destructive: 0 84.2% 60.2%;
-    --destructive-foreground: 40 25% 96%;
+    --destructive: 0 84% 60%;
+    --destructive-foreground: 0 0% 100%;
 
-    --border: 40 15% 88%;
+    --border: 40 15% 90%;
     --input: 40 15% 90%;
-    --ring: 25 85% 55%;
+    --ring: 30 90% 50%;
 
-    /* Custom design tokens for monastery theme */
-    --saffron: 25 85% 55%;
-    --gold: 45 75% 65%;
-    --mountain-blue: 200 25% 35%;
-    --warm-stone: 35 15% 88%;
-    --deep-earth: 25 35% 25%;
-    
-    /* Gradients */
-    --gradient-sunset: linear-gradient(135deg, hsl(var(--saffron)), hsl(var(--gold)));
-    --gradient-mountain: linear-gradient(180deg, hsl(var(--mountain-blue)), hsl(var(--saffron)));
-    --gradient-hero: linear-gradient(135deg, hsl(var(--saffron) / 0.9), hsl(var(--gold) / 0.8));
-    
+    /* Monastery Premium Tokens */
+    --saffron: 30 90% 50%;
+    --gold: 42 90% 55%;
+    --mountain-blue: 210 30% 30%;
+    --warm-stone: 38 20% 92%;
+    --deep-earth: 25 35% 18%;
+
+    /* Glass */
+    --glass-bg: 0 0% 100% / 0.7;
+    --glass-border: 0 0% 100% / 0.2;
+    --glass-blur: 20px;
+
     /* Shadows */
-    --shadow-monastery: 0 20px 40px -10px hsl(var(--saffron) / 0.2);
-    --shadow-card: 0 8px 24px -6px hsl(var(--deep-earth) / 0.1);
-    
-    /* Animations */
-    --transition-monastery: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+    --shadow-subtle: 0 1px 2px rgba(0, 0, 0, 0.04);
+    --shadow-soft: 0 4px 12px rgba(0, 0, 0, 0.06);
+    --shadow-medium: 0 8px 30px rgba(0, 0, 0, 0.08);
+    --shadow-large: 0 20px 60px rgba(0, 0, 0, 0.1);
+    --shadow-glow: 0 0 40px rgba(245, 158, 11, 0.15);
 
-    --radius: 0.5rem;
+    --radius: 0.75rem;
 
     --sidebar-background: 0 0% 98%;
-
     --sidebar-foreground: 240 5.3% 26.1%;
-
     --sidebar-primary: 240 5.9% 10%;
-
     --sidebar-primary-foreground: 0 0% 98%;
-
     --sidebar-accent: 240 4.8% 95.9%;
-
     --sidebar-accent-foreground: 240 5.9% 10%;
-
     --sidebar-border: 220 13% 91%;
-
     --sidebar-ring: 217.2 91.2% 59.8%;
   }
 
   .dark {
-    --background: 25 25% 8%;
-    --foreground: 40 25% 92%;
+    /* Premium Dark Mode — Apple-inspired */
+    --background: 220 15% 5%;
+    --foreground: 40 15% 92%;
 
-    --card: 25 20% 12%;
-    --card-foreground: 40 25% 92%;
+    --card: 220 15% 8%;
+    --card-foreground: 40 15% 92%;
 
-    --popover: 25 20% 12%;
-    --popover-foreground: 40 25% 92%;
+    --popover: 220 15% 8%;
+    --popover-foreground: 40 15% 92%;
 
-    --primary: 25 85% 65%;
-    --primary-foreground: 25 25% 8%;
+    --primary: 30 90% 55%;
+    --primary-foreground: 220 15% 5%;
 
-    --secondary: 45 55% 45%;
-    --secondary-foreground: 40 25% 92%;
+    --secondary: 220 12% 15%;
+    --secondary-foreground: 40 15% 92%;
 
-    --muted: 25 15% 20%;
-    --muted-foreground: 40 15% 65%;
+    --muted: 220 12% 15%;
+    --muted-foreground: 220 10% 55%;
 
-    --accent: 15 75% 55%;
-    --accent-foreground: 40 25% 92%;
+    --accent: 30 85% 55%;
+    --accent-foreground: 220 15% 5%;
 
-    --destructive: 0 62.8% 50.6%;
-    --destructive-foreground: 40 25% 92%;
+    --destructive: 0 62% 50%;
+    --destructive-foreground: 0 0% 100%;
 
-    --border: 25 15% 22%;
-    --input: 25 15% 22%;
-    --ring: 25 85% 65%;
-    
-    /* Dark mode custom tokens */
-    --saffron: 25 85% 65%;
-    --gold: 45 55% 55%;
-    --mountain-blue: 200 35% 25%;
-    --warm-stone: 25 15% 22%;
-    --deep-earth: 25 35% 15%;
+    --border: 220 12% 15%;
+    --input: 220 12% 15%;
+    --ring: 30 90% 55%;
+
+    --saffron: 30 85% 55%;
+    --gold: 42 80% 50%;
+    --mountain-blue: 210 35% 25%;
+    --warm-stone: 220 12% 15%;
+    --deep-earth: 40 15% 88%;
+
+    /* Glass Dark */
+    --glass-bg: 220 15% 8% / 0.6;
+    --glass-border: 0 0% 100% / 0.08;
+    --glass-blur: 24px;
+
+    /* Dark shadows */
+    --shadow-subtle: 0 1px 2px rgba(0, 0, 0, 0.3);
+    --shadow-soft: 0 4px 12px rgba(0, 0, 0, 0.4);
+    --shadow-medium: 0 8px 30px rgba(0, 0, 0, 0.5);
+    --shadow-large: 0 20px 60px rgba(0, 0, 0, 0.6);
+    --shadow-glow: 0 0 40px rgba(245, 158, 11, 0.2);
+
     --sidebar-background: 240 5.9% 10%;
     --sidebar-foreground: 240 4.8% 95.9%;
     --sidebar-primary: 224.3 76.3% 48%;
@@ -128,45 +134,157 @@ All colors MUST be HSL.
   }
 
   body {
-    @apply bg-background text-foreground;
-    font-family: 'Inter', system-ui, -apple-system, sans-serif;
+    @apply bg-background text-foreground antialiased;
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif;
+    font-feature-settings: 'cv02', 'cv03', 'cv04', 'cv11';
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    overflow-x: hidden;
   }
 
   html {
     scroll-behavior: smooth;
   }
+
+  /* Premium heading styles */
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
+    letter-spacing: -0.025em;
+    font-weight: 700;
+  }
+
+  h1 {
+    letter-spacing: -0.04em;
+  }
 }
 
-/* Custom Scrollbar */
+/* ============================================================
+   PREMIUM SCROLLBAR
+   ============================================================ */
 ::-webkit-scrollbar {
-  width: 8px;
+  width: 6px;
 }
 
 ::-webkit-scrollbar-track {
-  background: hsl(35 15% 95%);
+  background: transparent;
 }
 
 ::-webkit-scrollbar-thumb {
-  background: linear-gradient(180deg, hsl(25 85% 55%), hsl(45 75% 65%));
-  border-radius: 4px;
+  background: hsl(var(--muted-foreground) / 0.2);
+  border-radius: 999px;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background: hsl(25 85% 45%);
+  background: hsl(var(--muted-foreground) / 0.35);
 }
 
-/* Selection Color */
+/* ============================================================
+   SELECTION
+   ============================================================ */
 ::selection {
-  background-color: hsl(25 85% 55% / 0.3);
-  color: hsl(25 35% 15%);
+  background-color: hsl(30 90% 50% / 0.2);
+  color: hsl(var(--foreground));
 }
 
-/* Prose Override for AI content */
+/* ============================================================
+   GLASSMORPHISM UTILITY
+   ============================================================ */
+@layer components {
+  .glass {
+    background: hsl(var(--glass-bg));
+    backdrop-filter: blur(var(--glass-blur));
+    -webkit-backdrop-filter: blur(var(--glass-blur));
+    border: 1px solid hsl(var(--glass-border));
+  }
+
+  .glass-strong {
+    background: hsl(var(--glass-bg));
+    backdrop-filter: blur(40px) saturate(180%);
+    -webkit-backdrop-filter: blur(40px) saturate(180%);
+    border: 1px solid hsl(var(--glass-border));
+  }
+}
+
+/* ============================================================
+   PREMIUM ANIMATIONS
+   ============================================================ */
+@layer utilities {
+
+  /* Apple-style easing */
+  .ease-apple {
+    transition-timing-function: cubic-bezier(0.16, 1, 0.3, 1);
+  }
+
+  /* Magnetic hover */
+  .hover-lift {
+    transition: transform 0.5s cubic-bezier(0.16, 1, 0.3, 1),
+      box-shadow 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+
+  .hover-lift:hover {
+    transform: translateY(-4px);
+    box-shadow: var(--shadow-large);
+  }
+
+  /* Text gradient */
+  .text-gradient-gold {
+    background: linear-gradient(135deg, hsl(30 90% 55%), hsl(42 90% 60%), hsl(25 90% 50%));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  /* Section divider */
+  .section-padding {
+    @apply py-24 md:py-32 lg:py-40;
+  }
+
+  /* Apple-style large section heading */
+  .section-heading {
+    @apply text-4xl md:text-5xl lg:text-6xl font-bold tracking-tight;
+  }
+
+  .section-subheading {
+    @apply text-lg md:text-xl text-muted-foreground max-w-2xl mx-auto leading-relaxed mt-4;
+  }
+}
+
+/* ============================================================
+   SKELETON LOADER
+   ============================================================ */
+@keyframes skeleton-pulse {
+
+  0%,
+  100% {
+    opacity: 0.4;
+  }
+
+  50% {
+    opacity: 0.7;
+  }
+}
+
+.skeleton {
+  animation: skeleton-pulse 1.8s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+  background: linear-gradient(90deg,
+      hsl(var(--muted)) 0%,
+      hsl(var(--muted-foreground) / 0.08) 50%,
+      hsl(var(--muted)) 100%);
+  background-size: 200% 100%;
+  border-radius: var(--radius);
+}
+
+/* ============================================================
+   PROSE AI CONTENT
+   ============================================================ */
 .prose strong {
-  color: hsl(25 35% 25%);
+  color: hsl(var(--foreground));
 }
 
 .prose em {
-  color: hsl(25 85% 55%);
+  color: hsl(var(--primary));
 }
-
